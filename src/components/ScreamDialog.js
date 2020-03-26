@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import MyButton from "../util/MyButton";
-//import LikeButton from "./LikeButton";
+import LikeButton from "./LikeButton";
 //import Comments from "./Comments";
 //import CommentForm from "./CommentForm";
 import dayjs from "dayjs";
@@ -16,7 +16,7 @@ import Typography from "@material-ui/core/Typography";
 // Icons
 import CloseIcon from "@material-ui/icons/Close";
 import UnfoldMore from "@material-ui/icons/UnfoldMore";
-//import ChatIcon from "@material-ui/icons/Chat";
+import ChatIcon from "@material-ui/icons/Chat";
 // Redux stuff
 import { connect } from "react-redux";
 import { getScream } from "../redux/actions/dataActions";
@@ -39,6 +39,15 @@ const styles = theme => ({
   closeButton: {
     position: "absolute",
     left: "90%"
+  },
+  expandButton: {
+    position: "absolute",
+    left: "90%"
+  },
+  spinnerDiv: {
+    textAlign: "center",
+    marginTop: 50,
+    marginBottom: 50
   }
 });
 
@@ -95,6 +104,11 @@ class ScreamDialog extends Component {
           </Typography>
           <hr className={classes.invisibleSeparator} />
           <Typography variant="body1">{body}</Typography>
+          <LikeButton screamId={screamId} />
+          <span>{likeCount} Likes</span>
+          <MyButton tip="comments">
+            <ChatIcon color="primary" />
+          </MyButton>
         </Grid>
       </Grid>
     );
