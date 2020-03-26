@@ -1,16 +1,15 @@
 import React, { Component } from "react";
-//import axios from "axios";
 import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
 
 import Scream from "../components/scream/Scream";
 import Profile from "../components/profile/Profile";
+//import ScreamSkeleton from '../util/ScreamSkeleton';
 
 import { connect } from "react-redux";
 import { getScreams } from "../redux/actions/dataActions";
 
 class home extends Component {
-  //fetch data from server
   componentDidMount() {
     this.props.getScreams();
   }
@@ -19,7 +18,8 @@ class home extends Component {
     let recentScreamsMarkup = !loading ? (
       screams.map(scream => <Scream key={scream.screamId} scream={scream} />)
     ) : (
-      <p>Loading...</p>
+      <p>loading</p>
+      //<ScreamSkeleton />
     );
     return (
       <Grid container spacing={16}>

@@ -32,7 +32,7 @@ export default function(state = initialState, action) {
     case STOP_LOADING_UI:
       return {
         ...state,
-        loading: true
+        loading: false
       };
     default:
       return state;
