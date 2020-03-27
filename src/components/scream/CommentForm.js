@@ -12,8 +12,7 @@ import { submitComment } from "../../redux/actions/dataActions";
 const styles = theme => ({
   ...theme.spreadThis
 });
-
-export class CommentForm extends Component {
+class CommentForm extends Component {
   state = {
     body: "",
     errors: {}
@@ -21,12 +20,13 @@ export class CommentForm extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.UI.errors) {
-      this.setState({ errors: nextProps.UO.errors });
+      this.setState({ errors: nextProps.UI.errors });
     }
     if (!nextProps.UI.errors && !nextProps.UI.loading) {
       this.setState({ body: "" });
     }
   }
+
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
@@ -34,16 +34,19 @@ export class CommentForm extends Component {
     event.preventDefault();
     this.props.submitComment(this.props.screamId, { body: this.state.body });
   };
+
   render() {
     const { classes, authenticated } = this.props;
     const errors = this.state.errors;
+
     const commentFormMarkup = authenticated ? (
       <Grid item sm={12} style={{ textAlign: "center" }}>
         <form onSubmit={this.handleSubmit}>
           <TextField
             name="body"
             type="text"
-            label="Comment on Scream"
+            label="Comment on scream"
+            error={errors.comment ? true : false}
             helperText={errors.comment}
             value={this.state.body}
             onChange={this.handleChange}
@@ -59,7 +62,7 @@ export class CommentForm extends Component {
             Submit
           </Button>
         </form>
-        <hr className={classes.visibleSeperator} />
+        <hr className={classes.visibleSeparator} />
       </Grid>
     ) : null;
     return commentFormMarkup;
@@ -73,10 +76,12 @@ CommentForm.propTypes = {
   screamId: PropTypes.string.isRequired,
   authenticated: PropTypes.bool.isRequired
 };
+
 const mapStateToProps = state => ({
   UI: state.UI,
   authenticated: state.user.authenticated
 });
+
 export default connect(mapStateToProps, { submitComment })(
   withStyles(styles)(CommentForm)
 );
